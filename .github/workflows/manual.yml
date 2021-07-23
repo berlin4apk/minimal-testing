@@ -5,12 +5,19 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
     - uses: actions/checkout@v2
+     - name: ccache
+       uses: hendrikmuhs/ccache-action@v1
+       with:
+         key: ${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.config-args }}
+         max-size: 101M
     - name: 'Apply Workflow Patches'
       run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         cd .github
         bash ./github-ci.sh
     - name: 'Build Minimal Linux Live'
       run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         cd .github
         bash ./build_mll.sh
     - name: 'Test Docker'
