@@ -8,8 +8,8 @@ jobs:
     - name: ccache
       uses: hendrikmuhs/ccache-action@v1
       with:
-        key: ${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.config-args }}
-        max-size: 101M
+        # key: ${{ runner.os }}-${{ github.workflow }}
+        max-size: 501M
     - name: 'Apply Workflow Patches'
       run: |
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
