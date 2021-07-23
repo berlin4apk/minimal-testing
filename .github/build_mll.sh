@@ -15,6 +15,7 @@ do
   SCRIPTS=`ls ${PREFIX}_*.sh`
   for SCRIPT in ${SCRIPTS}
   do
+    echo "::group::Group name ${SCRIPT}"
     echo "`date` | Running script '${SCRIPT}'."
     set +e
     # ./${SCRIPT} > /tmp/mll.log 2>&1
@@ -25,12 +26,14 @@ do
       echo "`date` | Success."
       #tail -n 40 /tmp/mll.log
       echo "***   ***   ***"
+      echo "::endgroup::"
     else
-      echo "`date` | !!! FAILURE !!!"
+      echo "::warning::Warning message `date` | !!! FAILURE !!!"
       #tail -n 1000 /tmp/mll.log
       exit 1
     fi
   done
+  echo "Outside the group"
 done
 
 cat << CEOF
