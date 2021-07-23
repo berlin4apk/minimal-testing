@@ -17,16 +17,17 @@ do
   do
     echo "`date` | Running script '${SCRIPT}'."
     set +e
-    ./${SCRIPT} > /tmp/mll.log 2>&1
+    # ./${SCRIPT} > /tmp/mll.log 2>&1
+     ./${SCRIPT}
     set -e
 
     if [ "$?" = "0" ] ; then
       echo "`date` | Success."
-      tail -n 40 /tmp/mll.log
+      #tail -n 40 /tmp/mll.log
       echo "***   ***   ***"
     else
       echo "`date` | !!! FAILURE !!!"
-      tail -n 1000 /tmp/mll.log
+      #tail -n 1000 /tmp/mll.log
       exit 1
     fi
   done
