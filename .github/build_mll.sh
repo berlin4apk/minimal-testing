@@ -20,21 +20,23 @@ do
     echo "::group::Group name ${SCRIPT}"
     echo "`date` | Running script '${SCRIPT}'."
     set +e
-    # ./${SCRIPT} > /tmp/mll.log 2>&1
-     ./${SCRIPT}
+    ./${SCRIPT} > /tmp/mll.log 2>&1
+     #./${SCRIPT}
     set -e
 
     if [ "$?" = "0" ] ; then
       echo "`date` | Success."
-      #tail -n 40 /tmp/mll.log
+      tail -n 400 /tmp/mll.log
       echo "***   ***   ***"
       echo "::endgroup::"
     else
       echo "::warning::Warning message `date` | !!! FAILURE !!!"
-      #tail -n 1000 /tmp/mll.log
+      tail -n 1000 /tmp/mll.log
+      echo "::endgroup::"
       exit 1
     fi
   done
+  echo "::endgroup::"
   echo "Outside the group"
 done
 
