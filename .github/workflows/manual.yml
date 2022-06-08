@@ -10,18 +10,22 @@ jobs:
       with:
         # key: ${{ runner.os }}-${{ github.workflow }}
         max-size: 501M
+        verbose: 2
+        variant: ccache
+        # variant: sccache
+        # key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('/tmp/matrixplatformargs') }}
     - name: 'Add /usr/lib/ccache:/usr/local/opt/ccache/libexec to $PATH'
       run: |
-        echo "/usr/lib/ccache" >> $GITHUB_PATH
         echo "/usr/local/opt/ccache/libexec" >> $GITHUB_PATH
+        echo "/usr/lib/ccache" >> $GITHUB_PATH
     - name: 'Apply Workflow Patches'
       run: |
-        # export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        # export nullPATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         cd .github
         bash ./github-ci.sh
     - name: 'Build Minimal Linux Live'
       run: |
-        # export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        # export nullPATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         cd .github
         bash ./build_mll.sh
     - name: 'Test Docker'
