@@ -6,18 +6,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: ccache
-      uses: hendrikmuhs/ccache-action@v1
+      uses: hendrikmuhs/ccache-action@v1.2.2
       with:
         # key: ${{ runner.os }}-${{ github.workflow }}
         max-size: 501M
+    - name: 'Add /usr/lib/ccache:/usr/local/opt/ccache/libexec to $PATH'
+      run: |
+        echo "/usr/lib/ccache" >> $GITHUB_PATH
+        echo "/usr/local/opt/ccache/libexec" >> $GITHUB_PATH
     - name: 'Apply Workflow Patches'
       run: |
-        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        # export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         cd .github
         bash ./github-ci.sh
     - name: 'Build Minimal Linux Live'
       run: |
-        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        # export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         cd .github
         bash ./build_mll.sh
     - name: 'Test Docker'
